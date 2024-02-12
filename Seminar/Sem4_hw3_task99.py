@@ -61,8 +61,6 @@ COUNTER4PERCENTAGES = 3
 RICHNESS_PERCENT = decimal.Decimal(10) / decimal.Decimal(100)   # величина налога 10%
 RICHNESS_SUM = decimal.Decimal(10_000_000)      # Сумма от которой платится налог на богатство
  
-deposit = 1000
-
 bank_account = decimal.Decimal(0)
 count = 0
 operations = []
