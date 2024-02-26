@@ -13,6 +13,7 @@ from string import ascii_lowercase, digits          #Библиотека сим
 
 __all__ = ["generate_file","generate_file_and_extensoin"]
 
+
 chdir(r"Seminar\Sem7_files")                 # Сменить текущий каталог
 
 def generate_file_and_extensoin(**kwargs):

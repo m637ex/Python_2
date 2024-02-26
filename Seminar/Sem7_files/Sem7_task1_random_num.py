@@ -11,12 +11,16 @@ from pathlib import Path
 MIN_LIMIT = -1000
 MAX_LIMIT = 1000
 
+__all__ = ["write_random_to_file"]
+
+
 def write_random_to_file(num_pairs: int, filename: str):
-    with open(f'Seminar\Sem7_files\{filename}', 'a', encoding="utf-8") as f:
+    with open(fr'Seminar\Sem7_files\{filename}', 'a', encoding="utf-8") as f:
         for _ in range(num_pairs):
             f.write(f'{random.randint(MIN_LIMIT, MAX_LIMIT):<5}|{random.uniform(MIN_LIMIT, MAX_LIMIT)}\n')
 
 
-write_random_to_file(15, "gen_num.txt")
+if __name__ == '__main__':
+    write_random_to_file(15, "gen_num.txt")
 
    

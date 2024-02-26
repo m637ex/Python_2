@@ -12,6 +12,8 @@
 from pathlib import Path
 from typing import TextIO
     
+__all__ = ['converte']
+
 
 def read_or_begin(fd: TextIO) -> str:   # крутис майл покургу
     text = fd.readline()
@@ -41,7 +43,8 @@ def converte(f_num_file: str | Path, f_name_file: str | Path, file: str | Path =
                 f_result.writelines(f'{name_str.upper()} {int(mult)}\n')
     
 
-converte('gen_num.txt', 'gen_name.txt', 'task3_result.txt')
+if __name__ == '__main__':
+    converte('gen_num.txt', 'gen_name.txt', 'task3_result.txt')
         
 
         

@@ -5,13 +5,13 @@
 # ✔ Существующие файлы не должны удаляться/изменяться в случае совпадения имён.
 
 from os import chdir
-from random import randint, choices
 from pathlib import Path
+from random import randint, choices
 from string import ascii_lowercase, digits          #Библиотека символов
 
 __all__ = ["create_file",'generate_file_and_extensoin']
 
-chdir(r"Seminar\Sem7_files")                 # Сменить текущий каталог
+# chdir(r"Seminar\Sem7_files")                 # Сменить текущий каталог
 
 
 def generate_file_and_extensoin(path: str|Path, **kwargs):
@@ -39,9 +39,10 @@ def create_file(
             if not Path(name).is_file():    # если в каталоге нет файла c таким именем
                 break   # выходим из цикла
         data = bytes(randint(0, 255) for _ in range(randint(min_size, max_size)))
-        with open(f"{name}.{extension}", mode='wb') as file:
+        with open(f"{name}", mode='wb') as file:
             file.write(data)
 
-if __name__ == "__main__":
-    generate_file_and_extensoin(path=r'G:\YandexDisk\GB\Python\Python_2\Seminar\Sem7_files\TestTask7', ipg = 3, txt = 2, bin = 1)
-    pass
+if __name__ == "__main__":    
+    source_directory = r'G:\YandexDisk\GB\Python\Python_2\Seminar\Sem7_files\test_folder'
+    generate_file_and_extensoin(path=source_directory, jpg = 3, txt = 3, mkv = 3, bin = 3)
+    

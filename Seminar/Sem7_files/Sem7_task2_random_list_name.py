@@ -13,6 +13,8 @@ CONSONANTS = 'qwrtpsdfghjklzxcvbnm'
 MIN_LEN = 4
 MAX_LEN = 7
 
+__all__ = ["generate_name"]
+
 def generate_name(count: int = 10, file_name: str | Path = 'gen_name.txt') -> None:
     for _ in range(count):
         name = ''
@@ -23,9 +25,9 @@ def generate_name(count: int = 10, file_name: str | Path = 'gen_name.txt') -> No
             else:
                 name += random.choice(CONSONANTS)
             chr_is_vowel = not chr_is_vowel
-        with open(f'Seminar\Sem7_files\{file_name}', mode="a", encoding='utf-8') as f:
+        with open(fr'Seminar\Sem7_files\{file_name}', mode="a", encoding='utf-8') as f:
             f.writelines(f'{name.title()}\n')
         
-
-generate_name(10, Path('gen_name.txt'))
+if __name__ == '__main__':
+    generate_name(10, Path('gen_name.txt'))
       
