@@ -35,90 +35,51 @@
 #   {'Path': path, 'Type': 'Directory', 'Size': size}.
 
 
+import os
 import json
+import csv
 import pickle
-from pathlib import Path
-
-__all__ = ['json_to_pickle']
 
 
-def json_to_pickle(path: Path) -> None:
-    for obj in Path.iterdir(path):  # Перебираем все объекты в папке
-        if obj.is_file() and obj.suffix == '.json': # если объект файл и с расширением .json
-            with open(obj, 'r', encoding="UTF-8") as file_rd: # Читаем  содержимое файла в data
-                data = json.load(file_rd)
-            with open(f'{obj.stem}.pickle', mode='wb') as file_wr:
-                pickle.dump(data, file_wr)
-    
-    
-if __name__ == '__main__':
-    # work_directory = r'G:\YandexDisk\GB\Python\Python_2\Seminar\Sem8_serial_deserial'
-    sourse_directory = r'G:\YandexDisk\GB\Python\Python_2\Seminar\Sem8_serial_deserial'
-    json_to_pickle(Path(sourse_directory))
+def get_dir_size(start_path='.'):
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(start_path):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            total_size += os.path.getsize(fp)
+        for d in dirnames:
+            dp = os.path.join(dirpath, d)
+            total_size += get_dir_size(dp)
+    return total_size
 
 
+def save_results_to_json(results, file_name):
+    with open(file_name, 'w') as f:
+        json.dump(results, f)
 
 
+def save_results_to_csv(results, file_name):
+    with open(file_name, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['Path', 'Type', 'Size'])
+        for result in results:
+            writer.writerow([result['Path'], result['Type'], result['Size']])
 
 
+def save_results_to_pickle(results, file_name):
+    with open(file_name, 'wb') as f:
+        pickle.dump(results, f)
 
 
-
-
-
-
-
-
-
-
-
-
-
-# import os
-# import json
-# import csv
-# import pickle
-
-
-# def get_dir_size(start_path='.'):
-#     total_size = 0
-#     for dirpath, dirnames, filenames in os.walk(start_path):
-#         for f in filenames:
-#             fp = os.path.join(dirpath, f)
-#             total_size += os.path.getsize(fp)
-#         for d in dirnames:
-#             dp = os.path.join(dirpath, d)
-#             total_size += get_dir_size(dp)
-#     return total_size
-
-
-# def save_results_to_json(results, file_name):
-#     with open(file_name, 'w') as f:
-#         json.dump(results, f)
-
-
-# def save_results_to_csv(results, file_name):
-#     with open(file_name, 'w', newline='') as f:
-#         writer = csv.writer(f)
-#         writer.writerow(['Path', 'Type', 'Size'])
-#         for result in results:
-#             writer.writerow([result['Path'], result['Type'], result['Size']])
-
-
-# def save_results_to_pickle(results, file_name):
-#     with open(file_name, 'wb') as f:
-#         pickle.dump(results, f)
-
-
-# def traverse_directory(directory):
-#     results = []
-#     for root, dirs, files in os.walk(directory):
-#         for name in files:
-#             path = os.path.join(root, name)
-#             size = os.path.getsize(path)
-#             results.append({'Path': path, 'Type': 'File', 'Size': size})
-#         for name in dirs:
-#             path = os.path.join(root, name)
-#             size = get_dir_size(path)
-#             results.append({'Path': path, 'Type': 'Directory', 'Size': size})
-#     return results
+def traverse_directory(directory):
+    results = []
+    for root, dirs, files in os.walk(directory):
+        for name in files:
+            path = os.path.join(root, name)
+            size = os.path.getsize(path)
+            results.append({'Path': path, 'Type': 'File', 'Size': size})
+        for name in dirs:
+            path = os.path.join(root, name)
+            size = get_dir_size(path)
+            results.append({'Path': path, 'Type': 'Directory', 'Size': size})
+    return results
