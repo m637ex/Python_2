@@ -1,11 +1,39 @@
-# Задание №4
-# Доработайте класс прямоугольник из прошлых семинаров. Добавьте возможность изменять длину 
-# и ширину прямоугольника и встройте контроль недопустимых значений (отрицательных).
-# Используйте декораторы свойств.
-
 # Задание №5
-# Доработаем прямоугольник и добавим экономию памяти для хранения свойств 
-# экземпляра без словаря __dict__.
+# На семинарах по ООП был создан класс прямоугольник хранящий длину и ширину, а также вычисляющую периметр,
+# площадь и позволяющий складывать и вычитать прямоугольники беря за основу периметр.
+# Напишите 3-7 тестов unittest для данного класса.
+
+import unittest
+class TestCaseName(unittest.TestCase):   
+    def setUp(self) -> None:
+        self.rect1 = Rectangle(5, 10)
+        self.rect2 = Rectangle(3, 7)
+        self.rect3 = Rectangle(2, 5)
+        self.rect4 = Rectangle(10)   
+    def test_craete(self): # Тест создания
+        self.assertEqual(Rectangle(5, 10), self.rect1)
+    def test_perimeter(self): # должно начинаться с "test_"
+        self.assertEqual(self.rect1.perimeter(), 30)
+        self.assertEqual(self.rect2.perimeter(), 20)
+    def test_area(self):
+        self.assertEqual(self.rect1.area(), 50)
+        self.assertEqual(self.rect2.area(), 21)
+    def test_less(self):
+        self.assertLess(self.rect1, self.rect2)
+    def test_equal(self):
+        self.assertEqual(self.rect1, self.rect2)
+    def test_less_equal(self):
+        self.assertLessEqual(self.rect1, self.rect2)
+    def test_greater(self):
+        self.assertGreater(self.rect1, self.rect2)
+    def test_greater_equal(self):
+        self.assertGreaterEqual(self.rect1, self.rect2)
+    def test_sum(self):
+        rect3 = self.rect1 + self.rect2
+        self.assertEqual(rect3.perimeter(), 50)
+    def test_sub(self): # Вычитание
+        rect3 = self.rect1 - self.rect2
+        self.assertEqual(rect3.perimeter(), 10)
 
 class Rectangle:
     __slots__ = ('_width', '_height') # Задание №5
@@ -84,18 +112,5 @@ class Rectangle:
 
 
 if __name__ == '__main__':
-    rect1 = Rectangle(5, 10)
-    rect2 = Rectangle(3, 7)
+    unittest.main(verbosity=2)
     
-    # rect1.width = -1  # Ввод ошибочной ширины
-
-    print(f"Периметр rect1: {rect1.perimeter()}")  
-    print(f"Площадь rect2: {rect2.area()}")    
-    print(f"rect1 < rect2: {rect1 < rect2}")        
-    print(f"rect1 == rect2: {rect1 == rect2}")   
-    print(f"rect1 <= rect2: {rect1 <= rect2}")     
-
-    rect3 = rect1 + rect2
-    print(f"Периметр rect3: {rect3.perimeter()}") 
-    rect4 = rect1 - rect2
-    print(f"Ширина rect4: {rect4.width}")     
